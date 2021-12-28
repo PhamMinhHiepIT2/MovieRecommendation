@@ -1,5 +1,10 @@
-# Movinder.github.io
-Movinder website
+# Reference
+https://github.com/Movinder/movielens-imdb-exploration
+
+## User experience flow
+![User experience flow](flow.png)
+
+
 
 ## Cloning submodules
 ```
