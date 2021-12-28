@@ -129,9 +129,12 @@ def main():
             session['genre'] = request.form.get('genre-select')
             genre = session['genre']
             print("Genre: ", genre)
-            df_movie_by_genre = filter_by_genre(genre)
             if genre == 'all' or genre == 'select-genre':
                 df_movie_by_genre = df_movies
+            elif genre == 'other':
+                df_movie_by_genre = filter_by_genre('unknown')
+            else:
+                df_movie_by_genre = filter_by_genre(genre)
             print(df_movie_by_genre.count(), df_movie_by_genre['title'])
             top_trending_ids = list(df_movie_by_genre.sort_values(
                 by="trending_score").head(200).sample(15).movie_id_ml)
@@ -164,12 +167,14 @@ def main():
 
             session.clear()
             if genre == 'all' or genre == 'select-genre':
-                top_trending_ids = list(df_movies.sort_values(
-                    by="trending_score").head(200).sample(15).movie_id_ml)
+                df_movie_by_genre = df_movies
+            elif genre == 'other':
+                df_movie_by_genre = filter_by_genre('unknown')
             else:
                 df_movie_by_genre = filter_by_genre(genre)
-                top_trending_ids = list(df_movie_by_genre.sort_values(
-                    by="trending_score").head(200).sample(15).movie_id_ml)
+            print(df_movie_by_genre.count(), df_movie_by_genre['title'])
+            top_trending_ids = list(df_movie_by_genre.sort_values(
+                by="trending_score").head(200).sample(15).movie_id_ml)
 
             session['counter'] = 0
             session['members'] = 0
